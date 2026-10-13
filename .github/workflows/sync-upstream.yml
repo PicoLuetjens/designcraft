@@ -31,7 +31,7 @@ jobs:
             
       - name: Sync with Upstream
         env:
-          UPSTREAM_REPOSITORY: storytold/photocraft
+          UPSTREAM_REPOSITORY: storytold/designcraft
         run: |
           set -euo pipefail
 
