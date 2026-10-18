@@ -57,7 +57,7 @@ impl Tool for HandTool {
 
 /// Zoom tool: click zooms in (Alt: out); dragging left or right zooms out or in continuously
 /// around the press point (scrubby zoom).
-#[derive(Default)]
+#[derive(Clone, Default)]
 pub struct ZoomTool {
     /// Press point (canvas), zoom at the press, whether it has been dragged.
     press: Option<(Point, f64, bool)>,
@@ -155,6 +155,13 @@ impl Tool for PlaceGun {
         match self.start {
             Some(a) => vec![crate::Overlay::Marquee(designcraft_geom::Rect::from_points(a, self.cur))],
             None => vec![],
+        }
+    }
+    fn key(&mut self, _cx: &ToolContext, key: crate::ToolKey, _mods: Mods) -> Vec<Action> {
+        match key {
+            // Escape unloads the place cursor.
+            crate::ToolKey::Escape => vec![Action::SwitchTool("selection".into())],
+            _ => vec![],
         }
     }
     fn cursor(&self, _cx: &ToolContext, _p: Point, _m: Mods) -> Cursor {
